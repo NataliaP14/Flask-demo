@@ -26,16 +26,6 @@ with app.app_context():
   db.create_all()
 
 
-@app.route("/")
-def hello_world():
-    return render_template('home.html', subtitle='Home Page', text='This is the home page!')
-
-
-@app.route("/about")
-def second_page():
-    return render_template('about.html', subtitle='about', text='This is the second page!')
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -46,6 +36,16 @@ def register():
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('home')) # if so - send to home page
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/")
+def hello_world():
+    return render_template('home.html', subtitle='Home Page', text='This is the home page!')
+
+
+@app.route("/about")
+def second_page():
+    return render_template('about.html', subtitle='about', text='This is the second page!')
 
 
 @app.route("/update_server", methods=['POST'])
