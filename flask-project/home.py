@@ -10,11 +10,11 @@ app.config['SECRET_KEY'] = 'the key you generated'
 
 @app.route("/")
 def hello_world():
-    return render_template('home.html', subtitle='Home Page', text='This is the home page')
+    return render_template('home.html', subtitle='Home Page', text='This is the home page!')
     
 @app.route("/about")
 def second_page():
-    return render_template('about.html', subtitle='about', text='This is the second page')
+    return render_template('about.html', subtitle='about', text='This is the second page!')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
