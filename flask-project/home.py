@@ -28,7 +28,7 @@ def register():
 @app.route("/update_server", methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        repo = git.Repo('/home/NataliaP14/Flask-demo/flask-project')
+        repo = git.Repo('/home/NataliaP14/Flask-demo')
         origin = repo.remotes.origin
         origin.pull()
         return 'Updated PythonAnywhere successfully', 200
