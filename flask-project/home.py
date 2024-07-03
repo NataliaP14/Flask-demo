@@ -3,11 +3,12 @@ import git
 from forms import RegistrationForm
 from flask_behind_proxy import FlaskBehindProxy
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)
-app.config['SECRET_KEY'] = 'the key you generated'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default_secret_key')
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -25,6 +26,16 @@ class User(db.Model):
 with app.app_context():
   db.create_all()
 
+@app.route("/")
+@app.route("/home")
+def home():
+    return render_template('home.html', subtitle='Home Page', text='This is the home page!')
+
+
+@app.route("/about")
+def second_page():
+    return render_template('about.html', subtitle='about', text='This is the second page!')
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -36,16 +47,6 @@ def register():
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('home')) # if so - send to home page
     return render_template('register.html', title='Register', form=form)
-
-
-@app.route("/")
-def hello_world():
-    return render_template('home.html', subtitle='Home Page', text='This is the home page!')
-
-
-@app.route("/about")
-def second_page():
-    return render_template('about.html', subtitle='about', text='This is the second page!')
 
 
 @app.route("/update_server", methods=['POST'])
