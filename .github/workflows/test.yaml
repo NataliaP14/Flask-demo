@@ -1,0 +1,29 @@
+name: Tests
+on: push
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11.3
+
+      - name: Install dependencies
+        run: |
+          cd flask-project
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run basic tests
+        run: |
+          cd flask-project
+          python tests/test_basic.py
+
+      - name: Run user tests
+        run: |
+          cd flask-project
+          python tests/test_user.py
